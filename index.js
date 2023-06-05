@@ -1,6 +1,7 @@
-require("dotenv").config();
-import { ExtendedClient } from "./structures/Client";
+require('dotenv').config();
+const ExtendedClient = require('./structures/Client');
 
-export const client = new ExtendedClient();
-
+const client = new ExtendedClient();
 client.start();
+
+module.exports = client;
