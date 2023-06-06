@@ -1,6 +1,5 @@
 const { Client, Collection } = require('discord.js');
-const { glob } = require('glob');
-// const path = require('node:path');
+const { readdirSync } = require('node:fs');
 
 module.exports = class ExtendedClient extends Client {
   commands = new Collection();
@@ -12,10 +11,6 @@ module.exports = class ExtendedClient extends Client {
   start() {
     this.registerModules();
     this.login(process.env.TOKEN);
-  }
-
-  async importFile(filePath) {
-    return await import(filePath);
   }
 
   async registerCommands({ commands, guildId }) {
@@ -31,9 +26,9 @@ module.exports = class ExtendedClient extends Client {
   async registerModules() {
     // Commands
     const slashCommands = [];
-    const commandFiles = await glob('../commands/**/*.js');
+    const commandFiles = readdirSync('./commands');
     commandFiles.forEach(async (filePath) => {
-      const command = await this.importFile(filePath);
+      const command = require(`../commands/${filePath}`);
       if (!command.name) return;
       console.log(command);
 
@@ -44,14 +39,14 @@ module.exports = class ExtendedClient extends Client {
     this.on('ready', () => {
       this.registerCommands({
         commands: slashCommands,
-        guildId: process.env.guildId,
+        guildId: process.env.GUILD_ID,
       });
     });
 
     // Event
-    const eventFiles = await glob('../events/*.js');
+    const eventFiles = readdirSync('./events');
     eventFiles.forEach(async (filePath) => {
-      const event = await this.importFile(filePath);
+      const event = require(`../events/${filePath}`);
       this.on(event.event, event.run);
     });
   }
