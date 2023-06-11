@@ -10,13 +10,20 @@ module.exports = {
       const password = args[0];
 
       if (!password) {
-        ctx.reply(validationErrorText('password'));
+        return ctx.reply(validationErrorText('password'));
       }
 
-      ctx.users = {
-        userId,
+      ctx.users.set(userId, {
         password,
-      };
+        cash: 0,
+        bank: 0,
+        get total() {
+          return this.cash + this.bank;
+        },
+        experience: 0,
+        work: '',
+        premium: false,
+      });
 
       return ctx.reply(registrationText(userId));
     } catch (e) {
