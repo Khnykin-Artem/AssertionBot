@@ -1,5 +1,7 @@
 const { Client, Collection } = require('discord.js');
 const { readdirSync } = require('node:fs');
+const { glob } = require('glob');
+const { resolve } = require('node:path');
 
 module.exports = class ExtendedClient extends Client {
   commands = new Collection();
@@ -26,9 +28,9 @@ module.exports = class ExtendedClient extends Client {
   async registerModules() {
     // Commands
     const slashCommands = [];
-    const commandFiles = readdirSync('./commands');
+    const commandFiles = await glob('./commands/**/*.js');
     commandFiles.forEach(async (filePath) => {
-      const command = require(`../commands/${filePath}`);
+      const command = require(resolve(filePath));
       if (!command.name) return;
       console.log(command);
 
