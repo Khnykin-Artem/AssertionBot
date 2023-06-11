@@ -1,8 +1,17 @@
 require('dotenv').config();
-const ExtendedClient = require('./structures/Client');
+const { Telegraf, session } = require('telegraf');
+const userComposer = require('./composers/userComposer');
 
-const client = new ExtendedClient();
+const token = process.env.BOT_TOKEN;
+const bot = new Telegraf(token);
+const users = [];
 
-module.exports = client;
+bot.use(userComposer);
+bot.use(session());
+bot.context.users = users;
 
-client.start();
+bot.launch();
+console.log('bot launched');
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
