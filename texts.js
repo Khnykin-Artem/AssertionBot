@@ -4,8 +4,8 @@ module.exports = {
     `User (userId: ${userId}) successfully registered!`,
   banText: (userId) => `User (userId: ${userId}) has been banned successfully!`,
   balanceText: (userName, cash, bank, total) => `
-  ${userName}<\\br>
-  cash: ${cash}<\\br>
-  bank: ${bank}<\\br>
+  ${userName}
+  cash: ${cash}
+  bank: ${bank}
   total: ${total}`,
 };

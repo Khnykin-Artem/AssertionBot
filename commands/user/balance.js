@@ -1,4 +1,5 @@
 const { balanceText } = require('../../texts');
+const userService = require('../../services/userService');
 
 module.exports = {
   name: 'balance',
@@ -6,10 +7,8 @@ module.exports = {
     try {
       const userId = ctx.message.from.id;
       const userName = ctx.message.from.username;
-      console.log(ctx.users);
-      const { cash, bank, total } = ctx.users.get(userId);
-
-      return ctx.replyWithHTML(balanceText(userName, cash, bank, total));
+      const { cash, bank, total } = await userService.getBalance(userId);
+      return ctx.reply(balanceText(userName, cash, bank, total));
     } catch (e) {
       return console.log(e);
     }

@@ -1,4 +1,5 @@
 const { validationErrorText, registrationText } = require('../../texts');
+const userService = require('../../services/userService');
 
 module.exports = {
   name: 'registration',
@@ -13,15 +14,14 @@ module.exports = {
         return ctx.reply(validationErrorText('password'));
       }
 
-      ctx.users.set(userId, {
+      await userService.create({
+        userId,
         password,
         cash: 0,
         bank: 0,
-        get total() {
-          return this.cash + this.bank;
-        },
+        total: 0,
         experience: 0,
-        work: '',
+        work: 'janitor',
         premium: false,
       });
 

@@ -1,4 +1,5 @@
 const { validationErrorText, banText } = require('../../texts');
+const userService = require('../../services/userService');
 
 module.exports = {
   name: 'ban',
@@ -10,9 +11,7 @@ module.exports = {
       if (!userId) {
         return ctx.reply(validationErrorText('userId'));
       }
-      console.log(ctx.users);
-      ctx.users.delete(userId);
-      console.log(ctx.users);
+      await userService.delete(userId);
       return ctx.reply(banText(userId));
     } catch (e) {
       return console.log(e);
