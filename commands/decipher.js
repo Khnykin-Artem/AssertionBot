@@ -1,5 +1,5 @@
-const decrypt = require('../../lib/decrypt');
-const { validationErrorText } = require('../../texts');
+const decrypt = require('../lib/decrypt');
+const { validationErrorText } = require('../texts');
 
 module.exports = {
   name: 'decipher',

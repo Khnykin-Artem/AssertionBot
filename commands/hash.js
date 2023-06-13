@@ -1,5 +1,5 @@
-const hashing = require('../../lib/hashing');
-const { validationErrorText } = require('../../texts');
+const hashing = require('../lib/hashing');
+const { validationErrorText } = require('../texts');
 
 module.exports = {
   name: 'hash',

@@ -1,5 +1,5 @@
-const encrypt = require('../../lib/encrypt');
-const { validationErrorText, cipherText } = require('../../texts');
+const encrypt = require('../lib/encrypt');
+const { validationErrorText, cipherText } = require('../texts');
 
 module.exports = {
   name: 'cipher',
@@ -12,8 +12,8 @@ module.exports = {
         return ctx.reply(validationErrorText('string'));
       }
 
-      const [cipher, key, algorithm] = encrypt(string);
-      return ctx.reply(cipherText(cipher, key, algorithm));
+      const [cipher, key] = encrypt(string);
+      return ctx.reply(cipherText(cipher, key));
     } catch (e) {
       return console.log(e);
     }

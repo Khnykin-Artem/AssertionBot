@@ -1,13 +1,17 @@
 const { Telegraf } = require('telegraf');
 require('dotenv').config();
-const userComposer = require('./composers/userComposer');
-const adminComposer = require('./composers/adminComposer');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const token = process.env.TOKEN;
 const bot = new Telegraf(token);
 
-bot.use(userComposer);
-bot.use(adminComposer);
+const commandFiles = fs.readdirSync('./commands/');
+commandFiles.forEach((filePath) => {
+  const command = require(path.resolve('commands', filePath));
+  console.log(command);
+  bot.command(command.name, command.handler);
+});
 
 bot.launch();
 console.log('bot launched');

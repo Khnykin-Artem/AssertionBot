@@ -1,5 +1,5 @@
-const { validationErrorText } = require('../../texts');
-const compare = require('../../lib/compare');
+const { validationErrorText } = require('../texts');
+const compare = require('../lib/compare');
 
 module.exports = {
   name: 'verify',
