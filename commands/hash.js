@@ -5,7 +5,7 @@ module.exports = {
   name: 'hash',
   handler: async (ctx) => {
     try {
-      const [string, length] = ctx.message.text.split(' ').slice(1);
+      const [length, ...string] = ctx.message.text.split(' ').slice(1);
 
       if (!string) {
         return ctx.reply(validationErrorText('string'));
@@ -14,7 +14,7 @@ module.exports = {
         return ctx.reply(validationErrorText('length'));
       }
 
-      const hash = await hashing(string, length);
+      const hash = await hashing(string.join(' '), length);
       return ctx.reply(hash);
     } catch (e) {
       return console.log(e);

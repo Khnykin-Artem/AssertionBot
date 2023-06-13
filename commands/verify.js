@@ -5,7 +5,7 @@ module.exports = {
   name: 'verify',
   handler: async (ctx) => {
     try {
-      const [testString, hash] = ctx.message.text.split(' ').slice(1);
+      const [hash, ...testString] = ctx.message.text.split(' ').slice(1);
 
       if (!testString) {
         return ctx.reply(validationErrorText('testString'));
@@ -14,7 +14,7 @@ module.exports = {
         return ctx.reply(validationErrorText('hash'));
       }
 
-      const comparisonResult = await compare(testString, hash);
+      const comparisonResult = await compare(testString.join(' '), hash);
       return ctx.reply(String(comparisonResult));
     } catch (e) {
       return console.log(e);

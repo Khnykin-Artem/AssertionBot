@@ -6,7 +6,7 @@ key: ${key}`,
   helpText: `/cipher [string] - шифрует "string" и возвращает шифр с ключом.
 /decipher [cipher] [key] - расшифровывает "cipher" и возвращает расшифрованную строку.
 /hash [length] [string] - хэширует "string" и возвращает хэш.
-/verify [testString] [hash] - сравнивает соответствует ли "testString" хешу [hash].
+/verify [hash] [testString] - сравнивает соответствует ли "testString" хешу [hash].
 /help - помощь по командам бота.`,
 };
 
