@@ -1,5 +1,5 @@
 const hashing = require('../lib/hashing');
-const { validationErrorText } = require('../texts');
+const texts = require('../texts');
 
 module.exports = {
   name: 'hash',
@@ -7,11 +7,16 @@ module.exports = {
     try {
       const [length, ...string] = ctx.message.text.split(' ').slice(1);
 
+      const { language } = ctx.sessionDB
+        .get('users')
+        .value()
+        .find(({ id }) => id === ctx.message.from.id);
+
       if (!string) {
-        return ctx.reply(validationErrorText('string'));
+        return ctx.reply(texts[language].validationErrorText('string'));
       }
       if (!length) {
-        return ctx.reply(validationErrorText('length'));
+        return ctx.reply(texts[language].validationErrorText('length'));
       }
 
       const hash = await hashing(string.join(' '), length);

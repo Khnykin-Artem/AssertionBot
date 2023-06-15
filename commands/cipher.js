@@ -1,19 +1,24 @@
 const encrypt = require('../lib/encrypt');
-const { validationErrorText, cipherText } = require('../texts');
+const texts = require('../texts');
 
 module.exports = {
   name: 'cipher',
   handler: async (ctx) => {
     try {
       const args = ctx.message.text.split(' ').slice(1);
-      const string = args[0];
+      const string = args.join(' ');
+
+      const { language } = ctx.sessionDB
+        .get('users')
+        .value()
+        .find(({ id }) => id === ctx.message.from.id);
 
       if (!string) {
-        return ctx.reply(validationErrorText('string'));
+        return ctx.reply(texts[language].validationErrorText('string'));
       }
 
       const [cipher, key] = encrypt(string);
-      return ctx.reply(cipherText(cipher, key));
+      return ctx.reply(texts[language].cipherText(cipher, key));
     } catch (e) {
       return console.log(e);
     }
